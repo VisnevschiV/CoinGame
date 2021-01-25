@@ -19,7 +19,8 @@ public class UI : MonoBehaviour
 
     public void PlayAgain(){
         cubeCreator.end= false;
-        obst.ObstmoveSpeed = 8f;
         lost.SetActive(false);
+        obst.ObstmoveSpeed=20f;
+        coin.speed = 2f;
     }
 }

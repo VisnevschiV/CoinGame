@@ -1,31 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class coin : MonoBehaviour
 {
     public float moveSpeed;
     public GameObject lost;
     public static int Coins=1;
+    public static int LVL=1;
+    public static float speed=2f;
     public GameObject Coin1;
     public GameObject Coin2;
     public GameObject Coin3;
     public GameObject Coin4;
     public GameObject Coin5;
     public GameObject Coin6;
+    public Text Level;
+    public Text Num;
+    public Text Score;
+    private int score;
 
     
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("GO");
+        obst.ObstmoveSpeed=20f;
+        InvokeRepeating("scoring", 0f, 1f);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.Translate(Input.GetAxis("Horizontal")*moveSpeed*Time.deltaTime,0f,0f);
-       
+        Num.text=Coins.ToString()+" coins";
+        Level.text="LVL "+LVL.ToString();
+        Score.text ="score "+score.ToString();
         
     }
     void OnCollisionEnter(Collision Info){
@@ -38,7 +50,8 @@ public class coin : MonoBehaviour
                 cubeCreator.end= true;
                 Invoke("GameOver", 2.0f);
                 
-                lost.SetActive(true);}else{
+                lost.SetActive(true);
+                }else{
                     Coins--;
                     Destroy(Info.gameObject);
                     switch (Coins){
@@ -85,6 +98,18 @@ public class coin : MonoBehaviour
                     case 7:
                         Coin6.SetActive(true);
                     break;
+                    case 8:
+                        obst.ObstmoveSpeed+=20f;
+                        speed -= 0.5f; 
+                        Coin1.SetActive(false);
+                        Coin2.SetActive(false);
+                        Coin3.SetActive(false);
+                        Coin4.SetActive(false);
+                        Coin5.SetActive(false);
+                        Coin6.SetActive(false);
+                        Coins = 1;
+                        LVL++;
+                    break;
                 }
             }
         }
@@ -93,6 +118,17 @@ public class coin : MonoBehaviour
                 foreach (var clone in clones){
                 Destroy(clone);
                 }
+                clones = GameObject.FindGameObjectsWithTag ("money");
+                foreach (var clone in clones){
+                Destroy(clone);
+                }
+                LVL=1;
+                score=0;
     }
     
+    void scoring(){
+        if(obst.ObstmoveSpeed>10){
+        score+=(LVL*2);
+        }
+    }
 }

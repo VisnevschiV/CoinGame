@@ -9,7 +9,7 @@ public class obst : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ObstmoveSpeed = 15f;
+        
     }
 
     // Update is called once per frame

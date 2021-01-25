@@ -10,12 +10,13 @@ public class cubeCreator : MonoBehaviour
     public float maxleft= -4.7f;
     public float maxright=5.37f;
     public float timeBetwenSpawn;
-    private float _spawntime = 0;
+    public static float _spawntime;
     // Start is called before the first frame update
     void Start()
     {
-         InvokeRepeating("Spawner", 2.0f, 3f);
-         InvokeRepeating("Coins", 6.0f, 3f);
+        _spawntime = coin.speed;
+        InvokeRepeating("Spawner", 2.0f, _spawntime);
+        InvokeRepeating("Coins", 6.0f, _spawntime);
     }
     void Spawner(){
         if(!end){
